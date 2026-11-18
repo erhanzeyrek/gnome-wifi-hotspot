@@ -4,6 +4,7 @@ import GLib from 'gi://GLib';
 import * as QuickSettings from 'resource:///org/gnome/shell/ui/quickSettings.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import * as MessageTray from 'resource:///org/gnome/shell/ui/messageTray.js';
 import { Extension, gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.js';
 
 const BUS_NAME = 'io.github.erhanzeyrek.WifiHotspot';
@@ -273,13 +274,13 @@ class HotspotToggle extends QuickSettings.QuickMenuToggle {
             const msg = action.message || _("Your Wi-Fi adapter does not support 5GHz Hotspot. Switch to 2.4GHz and start?");
             
             // Show system notification with quick action button
-            const source = new Main.MessageTray.Source({
+            const source = new MessageTray.Source({
                 title: _('Wi-Fi Hotspot'),
                 iconName: 'network-wireless-hotspot-symbolic',
             });
             Main.messageTray.add(source);
 
-            const notification = new Main.MessageTray.Notification({
+            const notification = new MessageTray.Notification({
                 source: source,
                 title: _('Band Compatibility Warning'),
                 body: msg,
@@ -301,7 +302,7 @@ class HotspotToggle extends QuickSettings.QuickMenuToggle {
                 });
             });
 
-            source.showNotification(notification);
+            source.addNotification(notification);
         }
     }
 
